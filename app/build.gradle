@@ -5,10 +5,6 @@ model {
         compileSdkVersion 23
         buildToolsVersion "23.0.2"
 
-        ndk {
-            moduleName "native"
-        }
-
         defaultConfig {
             applicationId "sqlite3.com.android.tang.androidnativesqlite3"
             minSdkVersion.apiLevel 15
@@ -16,14 +12,19 @@ model {
             versionCode 1
             versionName "1.0"
 
-//            buildConfigFields {
-//                create() {
-//                    type "int"
-//                    name "VALUE"
-//                    value "1"
-//                }
-//            }
         }
+
+        ndk {
+            moduleName = "native"
+            ldLibs.addAll(['log'])
+            cppFlags.add("-std=c++11")
+            cppFlags.add("-fexceptions")
+//            cppFlags.add("-I${file("src/main/jni/include")}".toString())
+//            cppFlags.add("-I${file("src/main/jni/include/sqlite")}".toString())
+            stl = 'gnustl_shared'
+            debuggable true
+        }
+
 
         buildTypes {
             release {
@@ -32,13 +33,6 @@ model {
             }
         }
 
-//        productFlavors {
-//            create("flavor1") {
-//                applicationId "com.app"
-//            }
-//        }
-
-        // Configures source set directory.
         sources {
             main {
                 java {
@@ -48,8 +42,13 @@ model {
                 }
 
                 jni {
+                    exportedHeaders {
+                        srcDir "src/main/jni/include"
+                        srcDir "src/main/jni/include/sqlite"
+                    }
+
                     source {
-                        srcDir "src"
+                        srcDir "src/main/jni"
                     }
                 }
             }
