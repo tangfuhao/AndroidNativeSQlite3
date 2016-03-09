@@ -35,7 +35,7 @@ Java_main_java_sqlite3_com_android_tang_androidnativesqlite3_DbNative_createTabl
                                                                                   jstring sql_) {
     const char *sql = env->GetStringUTFChars(sql_, 0);
 
-    DatabaseWrappper *db = new DatabaseWrappper();
+    DatabaseWrappper *db = (DatabaseWrappper*)cppObject;
     bool ret = db->createTable(sql);
 
     env->ReleaseStringUTFChars(sql_, sql);
@@ -162,6 +162,24 @@ Java_main_java_sqlite3_com_android_tang_androidnativesqlite3_CursorNative_getCou
 
     CursorWrapper *cwp = (CursorWrapper*)cppObject;
     return (jint)cwp->getCount();
+}
+
+JNIEXPORT jboolean JNICALL
+Java_main_java_sqlite3_com_android_tang_androidnativesqlite3_CursorNative_nextNative(JNIEnv *env,
+                                                                                     jobject instance,
+                                                                                     jint cppObject) {
+    CursorWrapper *cwp = (CursorWrapper*)cppObject;
+    return (jboolean)cwp->next();
+
+}
+
+JNIEXPORT jboolean JNICALL
+Java_main_java_sqlite3_com_android_tang_androidnativesqlite3_CursorNative_resetNative(JNIEnv *env,
+                                                                                      jobject instance,
+                                                                                      jint cppObject) {
+    CursorWrapper *cwp = (CursorWrapper*)cppObject;
+    return (jboolean)cwp->reset();
+
 }
 
 

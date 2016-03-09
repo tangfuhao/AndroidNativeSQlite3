@@ -6,9 +6,7 @@
 #include <string.h>
 
 CursorWrapper::CursorWrapper(sqlite3_stmt* stmt){
-    if(sqlite3_step(stmt) == SQLITE_ROW){
-        _stmt = stmt;
-    }
+    _stmt = stmt;
 }
 CursorWrapper::~CursorWrapper(){
     if(_stmt){
@@ -30,7 +28,8 @@ int CursorWrapper::getColumnIndex(const char* columName){
     if(_stmt){
         int column_count = sqlite3_column_count(_stmt);
         for(int i = 0; i < column_count; i ++){
-            if(strcmp(sqlite3_column_name(_stmt,i),columName))
+            const char * temp = sqlite3_column_name(_stmt,i);
+            if(strcmp(temp,columName) == 0)
                 return i;
         }
     }
@@ -49,4 +48,19 @@ int CursorWrapper::getInt(int index) {
         return sqlite3_column_int(_stmt,index);
     }
     return -1;
+}
+
+bool CursorWrapper::next() {
+    if(_stmt){
+        return  sqlite3_step(_stmt) == SQLITE_ROW;
+    }
+
+    return false;
+}
+
+bool CursorWrapper::reset() {
+    if(_stmt){
+        return sqlite3_reset(_stmt) == SQLITE_OK;
+    }
+    return false;
 }

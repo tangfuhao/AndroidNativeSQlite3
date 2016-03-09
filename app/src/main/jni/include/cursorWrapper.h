@@ -19,6 +19,10 @@ public:
 
     int getInt(int index);
 
+    bool next();
+
+    bool reset();
+
 private:
     sqlite3_stmt* _stmt;
 };

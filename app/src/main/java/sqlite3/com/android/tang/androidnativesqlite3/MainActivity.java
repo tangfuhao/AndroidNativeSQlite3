@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button2).setOnClickListener(this);
         findViewById(R.id.button3).setOnClickListener(this);
         findViewById(R.id.button4).setOnClickListener(this);
+        findViewById(R.id.button5).setOnClickListener(this);
 
         File externalFolder = this.getFilesDir();
         File dbFile = new File(externalFolder.getAbsolutePath(),"temp.db");
@@ -46,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int viewID = v.getId();
         boolean ret = false ;
         if(viewID == R.id.button){
-            ret = dbNative.addObject("INSERT INTO customers VALUES('1', 'roman10')");
+            for(int i = 0; i < 10 ; i++){
+                if(!dbNative.addObject("INSERT INTO customers(name) VALUES('roman10')")) break;
+            }
+
         }else if(viewID == R.id.button2){
             ret = dbNative.deleteObject("");
         }else if(viewID == R.id.button3){
@@ -55,10 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ret = dbNative.createTableNative("CREATE TABLE IF NOT EXISTS customers (id INTEGER PRIMARY KEY,name TEXT NOT NULL)");
         }else if(viewID == R.id.button5){
             CursorNative cNative = dbNative.queryObject("SELECT * from customers");
-            int index = cNative.getColumnIndex("id");
-            int id = cNative.getInt(index);
-
-            Log.i("@@@@@ id","" + id);
+            while (cNative.next()){
+                int index = cNative.getColumnIndex("id");
+                int id = cNative.getInt(index);
+                Log.i("@@@@@",String.valueOf(id).toString());
+            }
             cNative.release();
         }
 

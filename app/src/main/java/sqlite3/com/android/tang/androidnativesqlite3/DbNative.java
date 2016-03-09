@@ -83,7 +83,7 @@ public class DbNative {
     public CursorNative queryObject(String sql){
         if(cppObject != 0) {
             int cursorObject = query(cppObject, sql);
-            return cursorObject > 0? new CursorNative(cursorObject) : null;
+            return cursorObject != 0? new CursorNative(cursorObject) : null;
         }
         return null;
     }

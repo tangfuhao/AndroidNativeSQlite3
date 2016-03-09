@@ -29,11 +29,21 @@ public class CursorNative {
         return getIntNative(cppObject,index);
     }
 
+    public boolean next(){
+        return nextNative(cppObject);
+    }
+
+    public boolean reset(){
+        return resetNative(cppObject);
+    }
+
     private native boolean releaseNative(int cppObject);
     private native int getIntNative(int cppObject,int index);
     private native int getColumnCountNative(int cppObject);
     private native int getColumnIndexNative(int cppObject,String columName);
     private native int getCountNative(int cppObject);
+    private native boolean nextNative(int cppObject);
+    private native boolean resetNative(int cppObject);
 
 
 
