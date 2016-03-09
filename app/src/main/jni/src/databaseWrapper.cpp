@@ -1,6 +1,5 @@
 #include "databaseWrapper.h"
 #include <stdio.h>
-#include <malloc.h>
 
 DatabaseWrappper::DatabaseWrappper(){
     _db = NULL;

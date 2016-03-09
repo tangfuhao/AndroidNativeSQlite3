@@ -1,15 +1,10 @@
 package main.java.sqlite3.com.android.tang.androidnativesqlite3;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
